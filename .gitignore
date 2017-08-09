@@ -1,0 +1,13 @@
+
+/.idea/
+/.settings/
+/sample-model/target/
+/sample-services/target/
+/tomee-sample.iml
+/sample-services/sample-services.iml
+/.classpath
+/.project
+/sample-model/sample-model.iml
+/sample-model/model.iml
+/sample-web/sample-web.iml
+/sample-web/target/
