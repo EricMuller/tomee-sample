@@ -1,26 +1,33 @@
 package com.emu.apps.sample.tomee.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
 
 @Entity
-public class Document {
+public class Document  {
 
     @Id
-    @GeneratedValue
-    private Integer id;
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    @Column
     private String name;
+    @Column
+    private Date dateCreation;
 
     public Document() {
     }
 
-    public Integer getId() {
+    public Document(String name, Date dateCreation) {
+        this.name = name;
+        this.dateCreation = dateCreation;
+    }
+
+    public long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -28,9 +35,15 @@ public class Document {
         return name;
     }
 
-    public void setName(String director) {
-        this.name = director;
+    public void setName(String name) {
+        this.name = name;
     }
 
+    public Date getDateCreation() {
+        return dateCreation;
+    }
 
+    public void setDateCreation(Date dateCreation) {
+        this.dateCreation = dateCreation;
+    }
 }

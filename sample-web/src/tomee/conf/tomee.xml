@@ -13,14 +13,24 @@
         <!--JtaManaged true-->
     <!--</Resource>-->
 
-    <Resource id="sample-unit" type="DataSource">
+    <Resource id="myDatabase" type="DataSource">
         #  PostgreSQL example
         #
         #  This connector will not work until you download the driver at:
         #  http://jdbc.postgresql.org/download.html
-        JdbcDriver   org.postgresql.Driver
-        JdbcUrl  jdbc:postgresql://192.168.1.100:5432/test
-        UserName     mydrive
-        Password     mydrive
+        JdbcDriver org.postgresql.Driver
+        JdbcUrl     jdbc:postgresql://192.168.1.100/test
+        UserName    mydrive
+        Password    mydrive
+        JtaManaged  true
     </Resource>
+
+    <Resource id="myDatabaseUnmanaged" type="DataSource">
+        JdbcDriver org.postgresql.Driver
+        JdbcUrl     jdbc:postgresql://192.168.1.100/test
+        UserName    mydrive
+        Password    mydrive
+        JtaManaged  false
+    </Resource>
+
 </tomee>

@@ -8,8 +8,8 @@
     <!--<name>tomee.sample</name>-->
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>sample-model</module>
         <module>sample-web</module>
+        <module>sample-model</module>
         <module>sample-services</module>
     </modules>
     <packaging>pom</packaging>
@@ -19,6 +19,8 @@
         <java.version>1.8</java.version>
         <querydsl.version>4.1.0</querydsl.version>
         <org.mapstruct.version>1.2.0.CR1</org.mapstruct.version>
+        <openejb.version>4.7.5</openejb.version>
+        <jackson-2-version>2.4.3</jackson-2-version>
     </properties>
 
     <dependencyManagement>
@@ -31,7 +33,6 @@
                 <version>${project.version}</version>
             </dependency>
 
-
             <dependency>
                 <groupId>com.emu.apps.sample</groupId>
                 <artifactId>sample-model</artifactId>
@@ -43,6 +44,7 @@
                 <artifactId>sample-web</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
             <!-- contains the entire jee api we only use a subset of it-->
             <dependency>
                 <groupId>javax</groupId>
@@ -51,6 +53,7 @@
                 <!-- scope provided means the container delivers it -->
                 <scope>provided</scope>
             </dependency>
+
             <!-- hsqldb references, we start hsqldb as server -->
             <dependency>
                 <groupId>org.hsqldb</groupId>
@@ -93,14 +96,43 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.jaxrs</groupId>
                 <artifactId>jackson-jaxrs-json-provider</artifactId>
-                <version>2.4.3</version>
+                <version>${jackson-2-version}</version>
             </dependency>
+
 
             <!-- CLient -->
             <dependency>
                 <groupId>com.sun.jersey</groupId>
                 <artifactId>jersey-client</artifactId>
                 <version>1.19</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>2.7.0</version>
+            </dependency>
+
+            <!-- test -->
+
+            <dependency>
+                <groupId>org.apache.openejb</groupId>
+                <artifactId>openejb-core</artifactId>
+                <version>${openejb.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.openejb</groupId>
+                <artifactId>openejb-cxf-rs</artifactId>
+                <version>${openejb.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.openejb</groupId>
+                <artifactId>openejb-cxf</artifactId>
+                <version>${openejb.version}</version>
+                <scope>test</scope>
             </dependency>
 
         </dependencies>

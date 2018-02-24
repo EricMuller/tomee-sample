@@ -1,5 +1,6 @@
 package com.emu.apps.sample.dao;
 
+import com.emu.apps.sample.tomee.model.Document;
 import com.emu.apps.sample.tomee.model.QDocument;
 import com.querydsl.jpa.impl.JPAQuery;
 
@@ -15,6 +16,7 @@ public class DocumentDao extends GenericDao<Document> {
 
         final QDocument qDocument = QDocument.document;
         final JPAQuery jpaQuery = new JPAQuery(entityManager);
+
 
         return jpaQuery.from(qDocument).fetch() ;
     }

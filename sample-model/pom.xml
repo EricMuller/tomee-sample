@@ -42,17 +42,22 @@
                 <artifactId>openjpa-maven-plugin</artifactId>
                 <version>2.2.0</version>
                 <executions>
+                    <!--<execution>-->
+                        <!--<id>enhancer</id>-->
+                        <!--<phase>process-classes</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>enhance</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
                     <execution>
-                        <id>mappingtool</id>
-                        <phase>process-classes</phase>
-                        <goals>
-                            <goal>enhance</goal>
-                        </goals>
+                        <id>enhancer</id>
+                        <phase>package</phase>
                     </execution>
+
                 </executions>
                 <configuration>
                     <includes>
-                        com/emu/apps/tomee/model/*
+                        com/emu/apps/tomee/model/**/*.class
                     </includes>
                 </configuration>
             </plugin>

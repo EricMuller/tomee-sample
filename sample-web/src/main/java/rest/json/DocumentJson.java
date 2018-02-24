@@ -1,6 +1,4 @@
-package com.emu.apps.sample.dao;
-
-import javax.persistence.Column;
+package rest.json;
 
 /**
  * Created by eric on 04/02/2017.
@@ -10,6 +8,14 @@ public class DocumentJson {
     private long id;
 
     private String name;
+
+    public DocumentJson() {
+    }
+
+//    public DocumentJson(long id, String name) {
+//        this.id = id;
+//        this.name = name;
+//    }
 
     public long getId() {
         return id;

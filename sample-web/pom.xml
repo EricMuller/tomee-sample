@@ -22,6 +22,7 @@
         <tomee.args>-Xmx512m -XX:PermSize=256m
             -Djava.security.auth.login.config=${project.basedir}/src/main/tomee/standalone/conf/login.config
         </tomee.args>
+
     </properties>
 
     <dependencies>
@@ -41,15 +42,142 @@
             <artifactId>jersey-client</artifactId>
         </dependency>
 
+        <!--&lt;!&ndash; the core, which includes Streaming API, shared low-level abstractions (but NOT data-binding) &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>com.fasterxml.jackson.core</groupId>-->
+            <!--<artifactId>jackson-core</artifactId>-->
+
+        <!--</dependency>-->
+
+        <!--&lt;!&ndash; Just the annotations; use this dependency if you want to attach annotations-->
+             <!--to classes without connecting them to the code. &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>com.fasterxml.jackson.core</groupId>-->
+            <!--<artifactId>jackson-annotations</artifactId>-->
+
+        <!--</dependency>-->
+
+        <!--&lt;!&ndash; databinding; ObjectMapper, JsonNode and related classes are here &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>com.fasterxml.jackson.core</groupId>-->
+            <!--<artifactId>jackson-databind</artifactId>-->
+
+        <!--</dependency>-->
+
+        <!--&lt;!&ndash; smile (binary JSON). Other artifacts in this group do other formats. &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>com.fasterxml.jackson.dataformat</groupId>-->
+            <!--<artifactId>jackson-dataformat-smile</artifactId>-->
+
+        <!--</dependency>-->
+        <!-- JAX-RS provider -->
         <dependency>
             <groupId>com.fasterxml.jackson.jaxrs</groupId>
             <artifactId>jackson-jaxrs-json-provider</artifactId>
         </dependency>
 
+        <!--<dependency>-->
+            <!--<groupId>org.codehaus.jackson</groupId>-->
+            <!--<artifactId>jackson-jaxrs</artifactId>-->
+            <!--<version>1.9.0</version>-->
+        <!--</dependency>-->
+
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-jaxrs</artifactId>
+            <version>1.5.3</version>
+            <exclusions>
+                <!-- API are useless since in javaee-api -->
+                <exclusion>
+                    <groupId>javax.ws.rs</groupId>
+                    <artifactId>jsr311-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.validation</groupId>
+                    <artifactId>validation-api</artifactId>
+                </exclusion>
+                <!-- depending what you do you can need that but not for the GUI using json -->
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.dataformat</groupId>
+                    <artifactId>jackson-dataformat-xml</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.datatype</groupId>
+                    <artifactId>jackson-datatype-joda</artifactId>
+                </exclusion>
+                <!-- we'll reuse the container one or add an impl as well to your app -->
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
+
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>swagger-ui</artifactId>
+            <version>2.1.8-M1</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+
+        <!--
+   The <scope>test</scope> guarantees that non of your runtime
+   code is dependent on any OpenEJB classes.
+   -->
+
+
+
+        <dependency>
+            <groupId>org.apache.tomee</groupId>
+            <artifactId>openejb-core</artifactId>
+            <version>7.0.4</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomee</groupId>
+            <artifactId>openejb-cxf-rs</artifactId>
+            <version>7.0.4</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>org.apache.openejb</groupId>-->
+            <!--<artifactId>openejb-jee</artifactId>-->
+            <!--<version>4.7.1</version>-->
+        <!--</dependency>-->
+
     </dependencies>
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <!--<finalName>${project.artifactId}</finalName>-->
         <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <webResources>
+                        <resource>
+                            <directory>src/main/webapp/WEB-INF</directory>
+                            <targetPath>WEB-INF</targetPath>
+                            <filtering>true</filtering>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
 
             <plugin>
                 <groupId>org.apache.openejb.maven</groupId>
@@ -64,12 +192,14 @@
                     <args>-Djavax.net.ssl.trustStore=C:\dev\work\cert\clientkeystore</args>
                     <libs>
                         <!--<lib>mysql:mysql-connector-java:5.1.20</lib>-->
-                        <lib>org.postgresql:postgresql:9.4-1206-jdbc42</lib>
+                        <lib>org.postgresql:postgresql:9.2-1004-jdbc4</lib>
                     </libs>
                     <!--<webapps>
                         <webapp>com.emu.apps.sample:sample-web:1.0-SNAPSHOT</webapp>
                     </webapps>-->
-
+                    <systemVariables>
+                        <openejb.classloader.forced-load>io.swagger.</openejb.classloader.forced-load>
+                    </systemVariables>
                 </configuration>
             </plugin>
         </plugins>
